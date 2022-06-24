@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Spinner } from './utils';
-// import { useQuery } from 'react-query';
-// import { fetchData } from './utils';
 
 const Photo = ({ url }) => (
   <div
@@ -21,7 +19,7 @@ const Photo = ({ url }) => (
 
 const url = 'https://jsonplaceholder.typicode.com/photos';
 
-const Photos = ({ resource }) => {
+const Photos = () => {
   const [photos, setPhotos] = useState(null);
   useEffect(() => {
     fetch(url)
