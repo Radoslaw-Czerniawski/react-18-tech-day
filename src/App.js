@@ -1,7 +1,6 @@
-import React, { useCallback, useState, useTransition } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { MappedInput } from './MappedInput';
-import { Spinner } from '../../Suspense/src/utils';
 
 import './App.css';
 
@@ -9,25 +8,21 @@ function App() {
   const [inputVal, setInputVal] = useState('');
   const [inputMapped, setInputMapped] = useState([]);
 
-  const [isPending, startTransition] = useTransition();
-
   const handleChange = useCallback(e => {
     setInputVal(e.target.value);
 
-    startTransition(() => {
-      const mappedMapper = [];
+    const mappedMapper = [];
 
-      if (e.target.value === '') {
-        setInputMapped([]);
-        return;
-      }
+    if (e.target.value === '') {
+      setInputMapped([]);
+      return;
+    }
 
-      for (let i = 0; i < 20000; i++) {
-        mappedMapper.push(e.target.value);
-      }
+    for (let i = 0; i < 20000; i++) {
+      mappedMapper.push(e.target.value);
+    }
 
-      setInputMapped(mappedMapper);
-    });
+    setInputMapped(mappedMapper);
   }, []);
 
   return (
@@ -40,7 +35,7 @@ function App() {
       }}
     >
       <input style={{ fontSize: '20px' }} value={inputVal} onChange={handleChange} />
-      {isPending ? <Spinner /> : <MappedInput value={inputMapped} />}
+      <MappedInput value={inputMapped} />
     </div>
   );
 }
