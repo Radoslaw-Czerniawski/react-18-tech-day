@@ -1,7 +1,7 @@
-import { Suspense } from 'react';
-import { useQuery } from 'react-query';
-import { Spinner } from './App';
-import { fetchData } from './utils';
+import { useEffect, useState } from 'react';
+import { Spinner } from './utils';
+// import { useQuery } from 'react-query';
+// import { fetchData } from './utils';
 
 const Photo = ({ url }) => (
   <div
@@ -22,9 +22,23 @@ const Photo = ({ url }) => (
 const url = 'https://jsonplaceholder.typicode.com/photos';
 
 const Photos = ({ resource }) => {
-  const photos = resource.users.read().slice(4000);
+  const [photos, setPhotos] = useState(null);
+  useEffect(() => {
+    fetch(url)
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw Error;
+      })
+      .then(data => setPhotos(data))
+      .catch(err => console.log(err));
+  }, []);
 
   // const { data: photos } = useQuery('photos', () => fetchData(url));
+
+  if (!photos) return <Spinner />;
 
   return (
     <>

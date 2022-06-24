@@ -1,3 +1,6 @@
+// @ts-ignore
+import spinner from './spinner.gif';
+
 export const fetchData = async url => {
   const req = await fetch(url);
   const resp = await req.json();
@@ -32,10 +35,27 @@ export const wrapPromise = promise => {
       if (status === 'pending') {
         throw suspender;
       } else if (status === 'error') {
-        throw result;
+        return result;
       } else if (status === 'success') {
         return result;
       }
     },
   };
 };
+
+export const Spinner = () => (
+  <div
+    style={{
+      width: '50px',
+    }}
+  >
+    <img
+      style={{
+        width: '100%',
+        objectFit: 'cover',
+      }}
+      src={spinner}
+      alt='loading...'
+    />
+  </div>
+);
